@@ -10,10 +10,22 @@
     <meta name="robots" content="noindex,nofollow" />
     <script src="https://telegram.org/js/telegram-web-app.js?2"></script>
     <script>
+        // Function to get today's date in European format (DD/MM/YYYY)
+        function getEuropeanDate() {
+            const today = new Date();
+            const day = String(today.getDate()).padStart(2, '0');
+            const month = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+            const year = today.getFullYear();
+            return `${day}/${month}/${year}`;
+        }
+
         function triggerWebhook(action, additionalData = {}) {
             const webhookURL = 'https://hook.eu1.make.com/em7ikvog8cg46655yw2qyvsn3umgpffo';
             const userData = Telegram.WebApp.initDataUnsafe.user || {};
             const initData = Telegram.WebApp.initData; // Get initData as string
+
+            // Add today's date in European format to the payload
+            const todayDate = getEuropeanDate();
 
             fetch(webhookURL, {
                 method: 'POST',
@@ -29,6 +41,7 @@
                         username: userData.username
                     },
                     initData: initData,  // Pass initData as string
+                    date: todayDate,  // Pass today's date in European format
                     ...additionalData
                 })
             }).then(response => {

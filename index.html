@@ -13,7 +13,7 @@
         function triggerWebhook(action, additionalData = {}) {
             const webhookURL = 'https://hook.eu1.make.com/em7ikvog8cg46655yw2qyvsn3umgpffo';
             const userData = Telegram.WebApp.initDataUnsafe.user || {};
-            const initData = Telegram.WebApp.initData;
+            const initData = Telegram.WebApp.initData; // Get initData as string
 
             fetch(webhookURL, {
                 method: 'POST',
@@ -28,7 +28,7 @@
                         last_name: userData.last_name,
                         username: userData.username
                     },
-                    initData: initData,  // Pass the raw initData for server-side processing
+                    initData: initData,  // Pass initData as string
                     ...additionalData
                 })
             }).then(response => {

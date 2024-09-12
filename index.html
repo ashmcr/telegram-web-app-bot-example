@@ -13,6 +13,7 @@
         function triggerWebhook(action, additionalData = {}) {
             const webhookURL = 'https://hook.eu1.make.com/em7ikvog8cg46655yw2qyvsn3umgpffo';
             const userData = Telegram.WebApp.initDataUnsafe.user || {};
+            const chatId = Telegram.WebApp.initDataUnsafe.chat ? Telegram.WebApp.initDataUnsafe.chat.id : null;
 
             fetch(webhookURL, {
                 method: 'POST',
@@ -27,6 +28,7 @@
                         last_name: userData.last_name,
                         username: userData.username
                     },
+                    chat_id: chatId, // Pass the chat_id in the payload
                     ...additionalData
                 })
             }).then(response => {
